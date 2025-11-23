@@ -7,12 +7,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model FoodTruck {
+  id          String     @id @default(uuid())
+  name        String
+  description String?
+  isActive    Boolean    @default(true)
+  schedules   Schedule[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
 model Schedule {
+  id           String                 @id @default(uuid())
+  foodTruckId  String
+  foodTruck    FoodTruck              @relation(fields: [foodTruckId], references: [id])
+  locationName String
+  address      String
+  latitude     Float
+  longitude    Float
+  dayOfWeek    Int                    // 0-6 (Sunday-Saturday)
+  startTime    String                 // HH:mm format
+  endTime      String                 // HH:mm format
+  isActive     Boolean                @default(true)
+  specialEvent String?                // e.g., "Oktoberfest", "Christmas Market"
+  availability LocationAvailability[]
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+}
+
+model LocationAvailability {
   id          String   @id @default(uuid())
-  location    String
-  address     String
+  scheduleId  String
+  schedule    Schedule @relation(fields: [scheduleId], references: [id])
   date        DateTime
-  startTime   String
-  endTime     String
+  isAvailable Boolean  @default(true)
+  reason      String?  // e.g., "Weather", "Maintenance", "Special Event"
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

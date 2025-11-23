@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
-import { UscheduleController } from "./schedule.controller";
-import { UscheduleService } from "./schedule.service";
+import { ScheduleController } from "./schedule.controller";
+import { ScheduleService } from "./schedule.service";
 import { PrismaService } from "../prisma.service";
 
 @Module({
-  controllers: [UscheduleController],
-  providers: [UscheduleService, PrismaService],
-  exports: [UscheduleService]
+  controllers: [ScheduleController],
+  providers: [ScheduleService, PrismaService],
+  exports: [ScheduleService],
 })
-export class UscheduleModule {}
+export class ScheduleModule { }
