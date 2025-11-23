@@ -8,7 +8,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.setGlobalPrefix("");
   const port = process.env.PORT || 3005;
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
   console.log(`Schedule service running on http://localhost:${port}`);
 }
 
